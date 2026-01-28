@@ -30,8 +30,6 @@ function getHumanChoice(){
 }
 
 
-let humanScore = 0;
-let computerScore = 0;
 
 function playRound(humanChoice, computerChoice){
     //lowercase human response
@@ -73,6 +71,7 @@ function playRound(humanChoice, computerChoice){
     }
 
     console.log(roundMessage);
+    return roundWinner;
 
 }
 
@@ -119,7 +118,39 @@ function paperTest(computer){
     }
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
 
-playRound(humanSelection, computerSelection);
+
+
+function playGame(){
+    // initalize round timer to 0
+    let roundTimer = 0;
+    //scores are already initalized outside of scope.
+
+    let playerScore = 0;
+    let computerScore = 0;
+
+    //start loop
+    for (roundTimer; roundTimer < 5; roundTimer++){
+        //display current scores
+        console.log(`The current scores are (Player) ${playerScore} to ${computerScore} (Computer)`);
+
+        const humanSelection = getHumanChoice();
+        const computerSelection = getComputerChoice();
+
+        const finalScore = playRound(humanSelection, computerSelection);
+
+        switch(finalScore){
+            case 1:
+                computerScore++;
+
+            case 2:
+                playerScore++;
+        }
+
+    }
+    
+    console.log(`The final scores are (Player) ${playerScore} to ${computerScore} (Computer)`);
+    //say that all the games are finished!
+}
+
+playGame();
