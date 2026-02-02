@@ -119,38 +119,28 @@ function paperTest(computer){
 }
 
 
+const buttons = document.querySelectorAll(".playerChoice");
+buttons[0].style.backgroundColor = "red"; 
 
+document.body.addEventListener("click", (e) =>{
+    e.preventDefault;
+    console.log(e.target.tagName);
+    let selectedItem = e.target.tagName;
+    let humanAnswer = e.target.textContent
+    if (selectedItem == "BUTTON"){
+        console.log(humanAnswer);
+        switch(humanAnswer){
+            case "Rock":
+                console.log("rock solid");
+                break
 
-function playGame(){
-    // initalize round timer to 0
-    let roundTimer = 0;
-    //scores are already initalized outside of scope.
+            case "Paper":
+                console.log("Paper Thin");
+                break
 
-    let playerScore = 0;
-    let computerScore = 0;
-
-    //start loop
-    for (roundTimer; roundTimer < 5; roundTimer++){
-        //display current scores
-        console.log(`The current scores are (Player) ${playerScore} to ${computerScore} (Computer)`);
-
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-
-        const finalScore = playRound(humanSelection, computerSelection);
-
-        switch(finalScore){
-            case 1:
-                computerScore++;
-
-            case 2:
-                playerScore++;
+            case "Scissors":
+                console.log("Sharp as Sword");
+                break
         }
-
     }
-    
-    console.log(`The final scores are (Player) ${playerScore} to ${computerScore} (Computer)`);
-    //say that all the games are finished!
-}
-
-playGame();
+})
