@@ -1,5 +1,5 @@
 
-console.log("We're so back");
+
 
 function getComputerChoice(){
     // query random number gen
@@ -25,15 +25,12 @@ function getComputerChoice(){
     
 }
 
-function getHumanChoice(){
-    return prompt("Pick rock, paper or scissors.");
-}
-
 
 
 function playRound(humanChoice, computerChoice){
     //lowercase human response
     let humanLower = humanChoice.toLowerCase();
+    let p = document.createElement("p");
 
     let roundWinner = 10;
 
@@ -70,7 +67,9 @@ function playRound(humanChoice, computerChoice){
             roundWinner = `Nope you broke something. Go back.`
     }
 
-    console.log(roundMessage);
+    
+    p.textContent = roundMessage;
+    battleLog.append(p);
     return roundWinner;
 
 }
@@ -118,29 +117,67 @@ function paperTest(computer){
     }
 }
 
+const battleLog = document.querySelector(".battle-log");
 
 const buttons = document.querySelectorAll(".playerChoice");
 buttons[0].style.backgroundColor = "red"; 
+
+
+    let computerScore = 0;
+    let humanScore = 0;
 
 document.body.addEventListener("click", (e) =>{
     e.preventDefault;
     console.log(e.target.tagName);
     let selectedItem = e.target.tagName;
-    let humanAnswer = e.target.textContent
+    let humanAnswer = e.target.textContent;
+    let scoreline = document.createElement("p");
+    let finishText= document.createElement("h2");
+
+
     if (selectedItem == "BUTTON"){
         console.log(humanAnswer);
-        switch(humanAnswer){
-            case "Rock":
-                console.log("rock solid");
-                break
 
-            case "Paper":
-                console.log("Paper Thin");
+        let score = playRound(humanAnswer, getComputerChoice());
+        console.log(score);
+        switch (score){
+            case 0:
+                break;
+            case 1:
+                computerScore++;
                 break
-
-            case "Scissors":
-                console.log("Sharp as Sword");
+            case 2:
+                humanScore++;
                 break
         }
+        
+
+        if(computerScore == 5 || humanScore == 5){
+            while(battleLog.firstChild){
+                battleLog.removeChild(battleLog.lastChild);
+            }
+            finishText.textContent = `And that's the game! Thanks for playing!
+            
+            \n The final score is:`;
+            battleLog.append(finishText);
+
+            //disable buttons
+            buttons.forEach(button =>{
+                button.disabled = true;
+            })
+        }
+        scoreline.textContent = `Player ${humanScore} - ${computerScore} 
+        Computer`;
+        battleLog.append(scoreline);
+
+        
+
+        
     }
 })
+
+
+
+
+
+
